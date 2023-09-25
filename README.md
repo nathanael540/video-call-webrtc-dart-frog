@@ -1,9 +1,10 @@
-<img src="https://cdn-icons-png.flaticon.com/512/3717/3717488.png" width="100" />
-
+![](https://github.com/nathanael540/video-call-webrtc-dart-frog/blob/main/screen.jpg?raw=true)
 
 # videoCalls - Chamada de Vídeo P2P / WebRTC
 
 Um projeto de chamadas de vídeo P2P via WebRTC, utilizando apenas Dart, WebSockets e JavaScript.
+
+
 
 ## O que contempla este projeto?
 
