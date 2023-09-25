@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>videoCalls - Video Chamada com desconhecidos</title>
+
+    <link rel="icon" href="images/video-call.png" type="image/png" sizes="16x16">
+    <link rel="preload" href="images/video-call.png" as="image">
+    <link rel="preload" href="images/loading.svg" as="image">
+
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,300;1,400;1,700&family=Mooli&display=swap"
+        rel="stylesheet">
+
+    <!-- Animações CSS - https://github.com/animate-css/animate.css/tree/v3.7.1 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Explosão de emojis - https://github.com/JoshuaKGoldberg/emojisplosion -->
+    <script src="https://unpkg.com/emojisplosion/lib/global.js"></script>
+
+    <!-- Conexão p2p de vídeo e mensagens - https://peerjs.com -->
+    <script src="https://unpkg.com/peerjs@1.5.0/dist/peerjs.min.js"></script>
+
+    <!-- polyfill - navigator.mediaDevices.getUserMedia -->
+    <script src="js/poly.js"></script>
+
+    <!-- Scripts -->
+    <script src="js/video-call.js" defer></script>
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Alerta de mensagens -->
+    <div id="dialog">
+        <div class="content">
+            <h1 id="dialog-title"></h1>
+            <div id="dialog-content"></div>
+            <section>
+                <button onclick="closeDialog();">OK</button>
+            </section>
+        </div>
+    </div>
+
+    <!-- Tela de carregando personalizada -->
+    <div id="loading">
+        <logo>
+            <img src="images/video-call.png" alt="">
+            <h1>
+                videoCalls
+            </h1>
+        </logo>
+        <img src="images/loading.svg" class="loading" alt="Loading...">
+        <div id="loading-message">Carregando...</div>
+    </div>
+
+    <!-- Tela inicial do app -->
+    <div id="intro" class="page show">
+        <logo>
+            <img src="images/video-call.png" alt="">
+
+            <h1>
+                videoCalls
+            </h1>
+
+            <h2>
+                Chamadas de vídeo com desconhecidos
+            </h2>
+        </logo>
+        <p>
+            Conheça novas pessoas online. Converse com pessoas desconhecidas. Faça novos amigos.
+        </p>
+
+        <!-- Botão de inicio - Entra na lista de espera por parceiro -->
+        <button onclick="preStart();">
+            Conectar
+            <div class="live">
+                <!-- Contador gratuito de usuários online - https://www.supercounters.com/onlinecounter -->
+                <script type="text/javascript" src="//widget.supercounters.com/ssl/online_t.js"></script>
+                <script type="text/javascript">sc_online_t(1675318, "Online", "#ffffff");</script>
+            </div>
+        </button>
+        <p class="small">
+            Para seguir, dê acesso a sua câmera para enviar seu vídeo e áudio...
+        </p>
+    </div>
+
+    <!-- Tela de espera de conexão com parceiro de vídeo -->
+    <div id="searching" class="page hidden">
+        <div id="box-searching">
+
+            <div class="wrap">
+                <div class="radar-wrap">
+                    <div class="radar">
+                        <div class="shadow"></div>
+                        <div class="handle"></div>
+                        <div class="circle inner"></div>
+                        <div class="circle outer"></div>
+
+                        <div class="photos">
+                            <figure>
+                                <img src="images/sem-foto.png" alt="">
+                            </figure>
+                            <figure>
+                                <img src="images/sem-foto.png" alt="">
+                            </figure>
+                            <figure>
+                                <img src="images/sem-foto.png" alt="">
+                            </figure>
+                            <figure>
+                                <img src="images/sem-foto.png" alt="">
+                            </figure>
+                            <figure>
+                                <img src="images/sem-foto.png" alt="">
+                            </figure>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h3>
+                Buscando companhia...
+            </h3>
+            <p>
+                Aguarde enquanto procuramos alguém para você
+                conversar...
+            </p>
+
+            <div>
+                <span class="timer-counter">00 : 00</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tela de conversa de vídeo chamada -->
+    <div id="video-call" class="page hidden">
+
+        <img src="images/video-call.png" class="logo" id="logo-app" alt="Logo">
+
+        <!-- Video do usuário atual (sendo enviado) -->
+        <video id="video-out" autoplay muted></video>
+
+        <!-- Efeitos visuais -->
+        <div id="visual-effects"></div>
+        <div id="video-loading"></div>
+
+        <!-- Video do usuário parceiro (sendo recebido) -->
+        <video id="video-in" autoplay></video>
+
+        <div id="controls">
+            <!-- Encerra uma chamada e busca um novo parceiro de video -->
+            <button class="end-call" onclick="searchFriend();">
+                Encerrar <span class="timer-counter">00 : 00</span>
+            </button>
+
+            <div>
+                <!-- Envia um emoji para a outra pessoa (Explosão) -->
+                <button class="icon ml-1 bg-1" onclick="sendEmojiToFriend(this);">🎁</button>
+                <button class="icon ml-1 bg-2" onclick="sendEmojiToFriend(this);">🌹</button>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
