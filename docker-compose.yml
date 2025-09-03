@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Backend service (Dart Frog WebSocket server)
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+    networks:
+      - videocall-network
+    restart: unless-stopped
+
+  # Frontend service (Static web files served by nginx)
+  frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - videocall-network
+    restart: unless-stopped
+
+networks:
+  videocall-network:
+    driver: bridge

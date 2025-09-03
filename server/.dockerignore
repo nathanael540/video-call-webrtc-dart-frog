@@ -1,0 +1,10 @@
+.git
+.gitignore
+.vscode
+README.md
+Dockerfile
+.dockerignore
+build/
+.dart_tool/
+*.log
+*.tmp
