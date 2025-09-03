@@ -1,0 +1,8 @@
+.git
+.gitignore
+.vscode
+Dockerfile
+.dockerignore
+.DS_Store
+*.log
+*.tmp

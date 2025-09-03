@@ -1,0 +1,12 @@
+.git
+.gitignore
+.vscode
+LICENSE.md
+README.md
+screen.jpg
+.DS_Store
+*.log
+*.tmp
+**/build/
+**/.dart_tool/
+**/node_modules/

@@ -22,7 +22,9 @@ O cliente web é um projeto HTML, CSS e JS que utiliza a biblioteca [PeerJS](htt
 
 ## Como executar?
 
-### Servidor
+### Opção 1: Desenvolvimento Local
+
+#### Servidor
 
 Para executar o servidor, é necessário ter o Dart SDK instalado e o pacote `dart_frog` instalado globalmente.
 
@@ -35,16 +37,46 @@ dart pub global activate dart_frog_cli
 Após a instalação, execute o servidor com o comando:
 
 ```bash
+cd server
 dart_frog dev
 ```
 
 O servidor estará disponível em `http://localhost:8080`.
 
-### Cliente
+#### Cliente
 
 Para executar o cliente, basta abrir o arquivo `index.html` no navegador através de qualquer servidor web. 
 
 (Na dúvida? experimente o [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) do VSCode).
+
+### Opção 2: Deploy com Docker 🐳
+
+#### Execução Rápida com Docker Compose
+
+```bash
+docker-compose up --build
+```
+
+Isso irá:
+- Construir e executar o servidor backend na porta 8080
+- Construir e executar o frontend na porta 80
+- Configurar a rede entre os serviços automaticamente
+
+#### Container Único
+
+```bash
+# Construir a imagem
+docker build -t videocall-app .
+
+# Executar o container
+docker run -p 80:80 -p 8080:8080 videocall-app
+```
+
+#### Acesso após deploy
+- **Frontend**: http://localhost
+- **Backend**: http://localhost:8080
+
+Para mais opções de deploy, consulte [DOCKER.md](DOCKER.md).
 
 
 ### Tecnologias utilizadas neste projeto

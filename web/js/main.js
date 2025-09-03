@@ -20,7 +20,22 @@ const emojisOptions = [
   "🌈",
   "⭐",
 ];
-const waitListServerWWS = "ws://localhost:8080/ws";
+// Get WebSocket URL from environment or use default
+const getWebSocketUrl = () => {
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const host = window.location.hostname;
+  const port = window.location.port || (protocol === 'wss:' ? '443' : '80');
+  
+  // Check if we're in development mode (localhost)
+  if (host === 'localhost' || host === '127.0.0.1') {
+    return "ws://localhost:8080/ws";
+  }
+  
+  // In production, assume WebSocket server is on port 8080
+  return `${protocol}//${host}:8080/ws`;
+};
+
+const waitListServerWWS = getWebSocketUrl();
 let friendId;
 let sendingIdToSearchTimeout = null;
 let sendIdToSearchTries = 0;
